@@ -1,57 +1,114 @@
-// script.js
+// script.js - Funcionalidades da página de produto
 
-// DOM Ready
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Página de produto BMS carregada com sucesso.');
     
-    // Atualizar ano no footer (se necessário)
+    // ============================================
+    // CONFIGURAÇÕES GERAIS
+    // ============================================
+    const WHATSAPP_NUMBER = "5516981005730";
+    
+    // ============================================
+    // BOTÕES DE NAVEGAÇÃO
+    // ============================================
+    
+    // Botão "Ver os planos" do Hero
+    const verPlanosBtn = document.getElementById('ver-planos-btn');
+    if (verPlanosBtn) {
+        verPlanosBtn.addEventListener('click', function() {
+            scrollToSection('planos-section');
+        });
+    }
+    
+    // Botão "Entender como funciona" do Hero
+    const entenderFuncionaBtn = document.getElementById('entender-funciona-btn');
+    if (entenderFuncionaBtn) {
+        entenderFuncionaBtn.addEventListener('click', function() {
+            scrollToSection('como-funciona');
+        });
+    }
+    
+    // ============================================
+    // BOTÕES DE PLANOS
+    // ============================================
+    const planoButtons = document.querySelectorAll('.plano-cta');
+    
+    planoButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const planoNome = this.getAttribute('data-plano') || 
+                             this.closest('.plano-card').querySelector('.plano-nome').textContent;
+            
+            const message = `Olá, tenho interesse no plano ${planoNome} de otimização de Google Meu Negócio. Pode me explicar melhor como funciona?`;
+            openWhatsApp(message);
+            
+            // Log para analytics (substitua por seu código de tracking)
+            console.log(`Plano selecionado: ${planoNome}`);
+        });
+    });
+    
+    // ============================================
+    // BOTÕES DO WHATSAPP
+    // ============================================
+    
+    // Botão CTA Final
+    const whatsappCtaFinal = document.getElementById('whatsapp-cta-final');
+    if (whatsappCtaFinal) {
+        whatsappCtaFinal.addEventListener('click', function() {
+            const message = "Olá, gostaria de conversar sobre a otimização do Google Meu Negócio para minha empresa.";
+            openWhatsApp(message);
+        });
+    }
+    
+    // Link WhatsApp do Footer (já tem href, mas adicionamos tracking)
+    const whatsappFooter = document.getElementById('whatsapp-footer');
+    if (whatsappFooter) {
+        whatsappFooter.addEventListener('click', function() {
+            console.log('WhatsApp do Footer clicado');
+            // Adicione seu código de tracking aqui
+        });
+    }
+    
+    // ============================================
+    // ATUALIZAÇÃO DO ANO NO COPYRIGHT
+    // ============================================
     const currentYear = new Date().getFullYear();
-    const yearElements = document.querySelectorAll('.current-year');
-    yearElements.forEach(el => {
-        el.textContent = currentYear;
-    });
+    const currentYearElement = document.getElementById('current-year');
+    if (currentYearElement) {
+        currentYearElement.textContent = currentYear;
+    }
     
-    // Suavizar ancora links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
+    // ============================================
+    // BOTÃO VOLTAR AO TOPO
+    // ============================================
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
     
-    // Adicionar classe de scroll para header
-    let lastScroll = 0;
-    window.addEventListener('scroll', function() {
-        const currentScroll = window.pageYOffset;
-        
-        // Efeito sutil de aparecimento de elementos ao rolar
-        const fadeElements = document.querySelectorAll('.card, .service-card, .proof-card, .plan-card');
-        
-        fadeElements.forEach(el => {
-            const elementTop = el.getBoundingClientRect().top;
-            const elementVisible = 150;
-            
-            if (elementTop < window.innerHeight - elementVisible) {
-                el.classList.add('fade-in-visible');
+    if (scrollToTopBtn) {
+        // Mostrar/ocultar botão ao rolar
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 500) {
+                scrollToTopBtn.style.opacity = '1';
+                scrollToTopBtn.style.visibility = 'visible';
+            } else {
+                scrollToTopBtn.style.opacity = '0';
+                scrollToTopBtn.style.visibility = 'hidden';
             }
         });
         
-        lastScroll = currentScroll;
-    });
+        // Scroll suave para o topo
+        scrollToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
     
-    // Inicializar elementos com fade-in
+    // ============================================
+    // ANIMAÇÕES DE ENTRADA
+    // ============================================
     const observerOptions = {
         threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
+        rootMargin: '0px 0px -50px 0px'
     };
     
     const observer = new IntersectionObserver(function(entries) {
@@ -62,128 +119,127 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
     
-    // Observar elementos para animação de entrada
-    document.querySelectorAll('.card, .service-card, .proof-card, .plan-card, .process-step, .timeline-step').forEach(el => {
+    // Observar elementos para animação
+    document.querySelectorAll('.card, .timeline-bloco, .beneficio-card, .incluso-card, .plano-card, .timeline-passo').forEach(el => {
         observer.observe(el);
     });
     
-    // Adicionar funcionalidade de "voltar ao topo"
-    const backToTopButton = document.createElement('button');
-    backToTopButton.innerHTML = '<i class="fas fa-chevron-up"></i>';
-    backToTopButton.classList.add('back-to-top');
-    backToTopButton.setAttribute('aria-label', 'Voltar ao topo');
-    document.body.appendChild(backToTopButton);
+    // ============================================
+    // FUNÇÕES UTILITÁRIAS
+    // ============================================
     
-    backToTopButton.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+    // Função para scroll suave até uma seção
+    function scrollToSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            window.scrollTo({
+                top: section.offsetTop - 80,
+                behavior: 'smooth'
+            });
+        }
+    }
+    
+    // Função para abrir WhatsApp com mensagem
+    function openWhatsApp(message) {
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+        
+        // Para produção, descomente a linha abaixo
+        window.open(whatsappURL, '_blank');
+        
+        // Para desenvolvimento, apenas log
+        console.log('WhatsApp URL:', whatsappURL);
+    }
+    
+    // ============================================
+    // CONTROLE DE Z-INDEX PARA HOVER DOS CARDS
+    // ============================================
+    const cards = document.querySelectorAll('.card, .plano-card, .beneficio-card, .incluso-card');
+    
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            // Temporariamente aumentar z-index para hover
+            this.style.zIndex = '10';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            // Restaurar z-index padrão
+            this.style.zIndex = '1';
         });
     });
     
-    // Mostrar/ocultar botão "voltar ao topo"
-    window.addEventListener('scroll', function() {
-        if (window.pageYOffset > 500) {
-            backToTopButton.classList.add('visible');
-        } else {
-            backToTopButton.classList.remove('visible');
-        }
-    });
-    
-    // Adicionar efeito de digitação para headline (opcional)
-    const heroHeadline = document.querySelector('.hero-headline');
-    if (heroHeadline) {
-        const originalText = heroHeadline.textContent;
-        heroHeadline.textContent = '';
-        
-        let i = 0;
-        const typeWriter = () => {
-            if (i < originalText.length) {
-                heroHeadline.textContent += originalText.charAt(i);
-                i++;
-                setTimeout(typeWriter, 30);
-            }
-        };
-        
-        // Iniciar efeito quando a seção hero estiver visível
-        const heroObserver = new IntersectionObserver(function(entries) {
-            if (entries[0].isIntersecting) {
-                setTimeout(typeWriter, 500);
-                heroObserver.unobserve(heroHeadline);
-            }
-        }, { threshold: 0.5 });
-        
-        heroObserver.observe(heroHeadline);
-    }
-    
-    // Adicionar CSS para o botão "voltar ao topo" e animações
-    const style = document.createElement('style');
-    style.textContent = `
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: var(--color-primary);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
+    // ============================================
+    // INICIALIZAÇÃO DE ANIMAÇÕES
+    // ============================================
+    // Adicionar CSS para animações de fade-in
+    const animationStyles = document.createElement('style');
+    animationStyles.textContent = `
+        .card, .timeline-bloco, .beneficio-card, .incluso-card, .plano-card, .timeline-passo {
             opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .back-to-top:hover {
-            background: var(--color-accent);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
         
         .fade-in-visible {
             opacity: 1 !important;
             transform: translateY(0) !important;
         }
-        
-        .card, .service-card, .proof-card, .plan-card, .process-step, .timeline-step {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        
-        @media (max-width: 768px) {
-            .back-to-top {
-                bottom: 20px;
-                right: 20px;
-                width: 45px;
-                height: 45px;
-            }
-        }
     `;
-    document.head.appendChild(style);
+    document.head.appendChild(animationStyles);
     
-    // Substituir número do WhatsApp pelo seu
-    // Encontre e substitua todos os links do WhatsApp
-    const whatsappNumber = "5511999999999"; // Substitua pelo seu número
+    // ============================================
+    // TRACKING DE INTERAÇÕES (EXEMPLO)
+    // ============================================
+    // Exemplo de como adicionar tracking de eventos
+    // Descomente e adapte conforme sua necessidade
     
-    document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
-        const currentHref = link.getAttribute('href');
-        const newHref = currentHref.replace(/wa\.me\/\d+/, `wa.me/${whatsappNumber}`);
-        link.setAttribute('href', newHref);
-    });
+    /*
+    function trackEvent(category, action, label) {
+        if (typeof gtag !== 'undefined') {
+            gtag('event', action, {
+                'event_category': category,
+                'event_label': label
+            });
+        }
+        console.log(`Evento tracked: ${category} - ${action} - ${label}`);
+    }
     
-    // Log para depuração
-    console.log('Site de Otimização GMN carregado com sucesso!');
+    // Exemplo de uso:
+    // planoButtons.forEach(button => {
+    //     button.addEventListener('click', function() {
+    //         const planoNome = this.getAttribute('data-plano');
+    //         trackEvent('Planos', 'click', `Plano ${planoNome}`);
+    //     });
+    // });
+    */
+    
+    console.log('Script inicializado com todas as funcionalidades.');
 });
+
+// ============================================
+// FUNÇÕES GLOBAIS (disponíveis em todo o escopo)
+// ============================================
+
+/**
+ * Função global para abrir WhatsApp (pode ser chamada de qualquer lugar)
+ * @param {string} message - Mensagem a ser enviada
+ */
+function openWhatsAppGlobal(message) {
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappURL = `https://wa.me/5516981005730?text=${encodedMessage}`;
+    window.open(whatsappURL, '_blank');
+}
+
+/**
+ * Função global para rolar até uma seção
+ * @param {string} sectionId - ID da seção
+ */
+function scrollToSectionGlobal(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        window.scrollTo({
+            top: section.offsetTop - 80,
+            behavior: 'smooth'
+        });
+    }
+}
