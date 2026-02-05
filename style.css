@@ -16,7 +16,7 @@
     --spacing-md: 1rem;
     --spacing-lg: 2rem;
     --spacing-xl: 3rem;
-    --spacing-2xl: 4rem;
+    --spacing-2xl: 2rem;
     --radius: 6px;
     --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -56,7 +56,7 @@ section {
    TIPOGRAFIA
    ============================================ */
 h1, h2, h3, h4 {
-    font-family: 'Barlow', sans-serif;
+    font-family: "Barlow Condensed", sans-serif;
     font-weight: 600;
     line-height: 1.2;
     color: var(--charcoal);
@@ -82,7 +82,7 @@ p {
 .hero-section {
     padding: var(--spacing-xl) 0;
     background-color: #0a0a0a;
-    min-height: 85vh;
+    min-height: 65vh;
     display: flex;
     align-items: center;
 }
@@ -99,26 +99,36 @@ p {
 }
 
 .hero-brand {
-    font-family: 'Barlow', sans-serif;
+    font-family: "Barlow Condensed", sans-serif;
     font-size: 1rem;
     font-weight: 800;
     color: red;
     letter-spacing: 0.05em;
     margin-bottom: 0.5rem;
-
 }
 
-.hero-brand-tagline {
+.hero-brand a {
     font-family: 'Poppins', sans-serif;
     font-size: 0.90rem;
     color: var(--gray-medium);
     font-weight: 500;
     letter-spacing: 0.1em;
 }
+.hero-brand p{
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.90rem;
+    color: var(--white-dirty);
+    font-weight: 300;
+    line-height: 2.9;
+    text-align: left;
+
+}
+
+.hero-headline a {font-size: 1.5rem; }
 
 .hero-headline {
-    font-family: 'Barlow', sans-serif;
-    font-size: 3.5rem;
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 2.5rem;
     font-weight: 700;
     color: var(--white-dirty);
     line-height: 1.2;
@@ -131,11 +141,11 @@ p {
 
 .hero-subheadline {
     font-family: 'Poppins', sans-serif;
-    font-size: 1.25rem;
-    color: var(--gray-light);
+    font-size: 1.15rem;
+    color: var(--blood-red-light);
     line-height: 1.8;
     margin-bottom: var(--spacing-lg);
-    max-width: 900px;
+    max-width: 2000px;
     margin-left: auto;
     margin-right: auto;
     font-weight: 400;
@@ -212,25 +222,26 @@ p {
 }
 
 .section-headline {
-    font-family: 'Barlow', sans-serif;
-    font-size: 3rem;
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 2.5rem;
     font-weight: 700;
     color: var(--charcoal);
     margin-bottom: var(--spacing-lg);
     line-height: 1.2;
     letter-spacing: -0.02em;
-    text-align: center;
+    text-align: left;
+    text-transform: uppercase;
 }
+
 
 .problemas-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
-    margin-bottom: var(--spacing-lg);
 }
 
 .problema-card {
-    padding: 2.5rem;
+    padding: 0.5rem;
     background: white;
     border: 1px solid var(--gray-light);
     border-radius: 12px;
@@ -244,11 +255,12 @@ p {
     transform: translateY(-8px);
     box-shadow: 0 12px 24px rgba(139, 0, 0, 0.15);
     border-color: var(--blood-red);
+    border-left: #8b0000 4px solid;
 }
 
 .problema-icon-wrapper {
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
     background: linear-gradient(135deg, var(--blood-red), var(--blood-red-light));
     border-radius: 50%;
     display: flex;
@@ -264,7 +276,7 @@ p {
 }
 
 .problema-title {
-    font-family: 'Barlow', sans-serif;
+    font-family: "Barlow Condensed", sans-serif;
     font-size: 1.5rem;
     font-weight: 600;
     color: var(--charcoal);
@@ -338,7 +350,7 @@ p {
 }
 
 .timeline-title {
-    font-family: 'Barlow', sans-serif;
+    font-family: "Barlow Condensed", sans-serif;
     font-size: 1.5rem;
     font-weight: 600;
     color: var(--charcoal);
@@ -403,7 +415,7 @@ p {
 }
 
 .card-central-title {
-    font-family: 'Barlow', sans-serif;
+    font-family: "Barlow Condensed", sans-serif;
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: var(--spacing-md);
@@ -456,7 +468,7 @@ p {
 }
 
 .beneficio-title {
-    font-family: 'Barlow', sans-serif;
+    font-family: "Barlow Condensed", sans-serif;
     font-size: 1.25rem;
     font-weight: 600;
     color: var(--charcoal);
@@ -532,7 +544,7 @@ p {
 }
 
 .incluso-title {
-    font-family: 'Barlow', sans-serif;
+    font-family: "Barlow Condensed", sans-serif;
     font-size: 1.25rem;
     font-weight: 600;
     color: var(--charcoal);
@@ -596,7 +608,7 @@ p {
 }
 
 .plano-nome {
-    font-family: 'Barlow', sans-serif;
+    font-family: "Barlow Condensed", sans-serif;
     font-size: 2rem;
     font-weight: 700;
     color: var(--charcoal);
@@ -635,7 +647,7 @@ p {
 }
 
 .preco-valor {
-    font-family: 'Barlow', sans-serif;
+    font-family: "Barlow Condensed", sans-serif;
     font-size: 3.5rem;
     font-weight: 700;
     color: var(--blood-red);
@@ -787,7 +799,7 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Barlow', sans-serif;
+    font-family: "Barlow Condensed", sans-serif;
     font-size: 1.25rem;
     font-weight: 700;
     box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
@@ -811,7 +823,7 @@ p {
 }
 
 .passo-titulo {
-    font-family: 'Barlow', sans-serif;
+    font-family: "Barlow Condensed", sans-serif;
     font-size: 1.25rem;
     font-weight: 600;
     color: var(--charcoal);
@@ -897,7 +909,7 @@ p {
 }
 
 .cta-final-headline {
-    font-family: 'Barlow', sans-serif;
+    font-family: "Barlow Condensed", sans-serif;
     font-size: 3rem;
     font-weight: 700;
     color: var(--white-dirty);
@@ -965,7 +977,7 @@ p {
 }
 
 .footer-nome {
-    font-family: 'Barlow', sans-serif;
+    font-family: "Barlow Condensed", sans-serif;
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--white-dirty);
