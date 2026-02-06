@@ -24,6 +24,7 @@
     --font-mono: 'Space Mono', 'Courier New', monospace;
     
     /* Spacing */
+    --spacing-xa: 0.2rem;
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
     --spacing-md: 2rem;
